@@ -1,0 +1,1 @@
+# hybris-hac-extension-package
