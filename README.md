@@ -34,3 +34,15 @@ Then section for `hac` should have folder structure `hac/resources/jsp,static`. 
 To run platform in file-scan mode you should copy this template to your extension and run `npm run start`. That is it.
 
 Enjoy!
+
+
+## Releasing new versions
+
+To release new version of that project use that way:
+
+```bash
+npm install -g git-release
+release 
+```
+
+That will do all for you.
