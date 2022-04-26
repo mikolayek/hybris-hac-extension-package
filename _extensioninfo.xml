@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<extensioninfo>        
+    <extension>
+        <requires-extension name="backoffice"/>
+        <meta key="hac-module" value="true"/>
+    </extension>
+</extensioninfo>

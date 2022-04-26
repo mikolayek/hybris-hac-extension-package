@@ -1,0 +1,8 @@
+@font-face {
+  font-family: SAP-icons;
+  src: url('/static/SAP-icons.ttf') format('truetype');
+}
+
+.icon-refresh::before {
+  content: '\e00a';
+}

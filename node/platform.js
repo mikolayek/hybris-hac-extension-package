@@ -4,8 +4,11 @@ import fs from "fs";
 import chalk from "chalk";
 import process from "process";
 import chokidar from "chokidar";
+import open from "open";
+import ora from "ora";
 
-const platformhomepath = "platformhome.properties";
+// path is related to package.json in resources folder.
+const platformhomepath = "../../platformhome.properties";
 var platformPath = "";
 const error = chalk.bold.red;
 
@@ -27,7 +30,10 @@ const monitor = function(cmd, sync = false) {
 };
 
 const build = function(sync = true) {
-	return monitor(["ant", "build"], sync);
+  const spinner = ora('ant build').start();
+	var proc = monitor(["ant", "build"], sync);
+  spinner.stop();
+  return proc;
 };
 
 const run = function() {
@@ -51,8 +57,12 @@ if (!fs.existsSync(platformhomepath)) {
     const watcher = chokidar.watch(process.cwd() + '/hac/resources');
 		process.chdir(platformPath);
     var bb = build(true);
-    console.log(bb.output);
 		var brun = run();
+    brun.stdout.on('data', (data) => {
+      if (data.toString().includes('Server startup in')) {
+        open("https://localhost:9002");
+      }
+    });
     var bbuild = null;
     watcher.on("all", (eventName, path) => {
       console.log(`${path} - file ${eventName}. build ${bbuild}`);
@@ -79,5 +89,3 @@ if (!fs.existsSync(platformhomepath)) {
 		});
 	}
 }
-
-

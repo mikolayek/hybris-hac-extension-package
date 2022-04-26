@@ -1,0 +1,101 @@
+{
+  "name": "hybris-hac-extension-website-template",
+  "version": "1.0.2",
+  "description": "A template for building static website based on static-website-template@GitHub",
+  "author": "Pawel Wolanski <pawel.wolanski@sap.com>",
+  "license": "MIT",
+  "private": "true",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Vincenius/static-website-template"
+  },
+  "scripts": {
+    "ywatch": "node ../../node/platform.js",
+    "prettier": "npx prettier -w src/*/*.{js,html,scss}",
+    "clean": "rimraf static/css/* static/bundle.*",
+    "css:autoprefixer": "postcss -u autoprefixer -r static/css/*.css",
+    "css:scss": "node-sass --output-style compressed -o static/css src/scss",
+    "css:lint": "stylelint src/scss/*.scss --custom-syntax postcss-scss --fix",
+    "build:css": "npm run css:lint && npm run css:scss && npm run css:autoprefixer",
+    "build:js": "npm run prettier && webpack --mode=production",
+    "build:html": "posthtml -c posthtml.json",
+    "build:images": "imagemin src/images/**/* --out-dir=static/images",
+    "build": "run-s build:*",
+    "serve": "browser-sync start --server \".\" --files \"static\" \"index.html\"",
+    "watch:css": "onchange \"src/scss\" -- npm run build:css",
+    "watch:html": "onchange \"src/views\" -- npm run build:html",
+    "watch:images": "onchange \"src/images\" -- npm run build:images",
+    "watch:js": "onchange \"src/js\" -- webpack --mode=development",
+    "watch": "run-p serve watch:*",
+    "wa": "run-p ywatch watch:*"
+  },
+  "dependencies": {
+    "lit": "^2.0.2"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.16.11",
+    "@open-wc/eslint-config": "^4.3.0",
+    "autoprefixer": "^10.4.4",
+    "babel-loader": "^8.2.3",
+    "browser-sync": "^2.27.9",
+    "eslint": "^8.13.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-webpack-plugin": "^3.1.1",
+    "htmlnano": "^2.0.0",
+    "imagemin-cli": "^7.0.0",
+    "node-sass": "^7.0.1",
+    "npm-run-all": "^4.1.5",
+    "onchange": "^7.1.0",
+    "postcss-cli": "^9.1.0",
+    "postcss-scss": "^4.0.3",
+    "posthtml": "^0.16.6",
+    "posthtml-cli": "^0.10.0",
+    "posthtml-modules": "^0.8.0",
+    "prettier": "^2.4.1",
+    "stylelint": "^14.6.0",
+    "stylelint-config-standard": "^25.0.0",
+    "webpack": "^5.70.0",
+    "webpack-cli": "^4.9.2",
+    "chalk": "^5.0.1",
+    "child_process": "^1.0.2",
+    "chokidar": "^3.5.3",
+    "open": "^8.4.0",
+    "ora": "^6.1.0",
+    "properties-reader": "^2.2.0"
+  },
+  "prettier": {
+    "useTabs": false,
+    "semi": true,
+    "singleQuote": true,
+    "bracketSpacing": true,
+    "trailingComma": "es5",
+    "printWidth": 160
+  },
+  "eslintConfig": {
+    "extends": "airbnb-base",
+    "parserOptions": {
+      "ecmaVersion": "latest",
+      "sourceType": "module"
+    },
+    "env": {
+      "browser": true,
+      "es6": true
+    },
+    "rules": {
+      "no-console": "off",
+      "no-restricted-syntax": [
+          "error",
+          {
+              "selector": "CallExpression[callee.object.name='console'][callee.property.name!=/^(log|warn|error|info|trace)$/]",
+              "message": "Unexpected property on console object was called"
+          }
+      ]
+    }
+  },
+  "stylelint": {
+    "rules": {
+      
+    }
+  }
+}
